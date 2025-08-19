@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoolBulls: An Online Auction Platform for Students</title>
+    <!-- Preserved Thymeleaf resource links -->
+    <link rel="stylesheet" th:href="@{/css/User.css}">
+    <link rel="stylesheet" th:href="@{/css/items.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
+</head>
+<body>
+
+  <div th:if="${session.username == null}">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        window.location.href = /*[[@{/}]]*/ '/';
+        /*]]>*/
+    </script>
+  </div>
+  
+  <header> 
+    <nav class="navbar">
+     <section id="home">
+           <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#auction">Auctions</a></li> <!-- Restored anchor link -->
+            <li><a href="User.html">Contact</a></li>
+        </ul>
+     </section>
+     </nav>
+     
+      <div class="logo">KoolBulls</div>
+
+    <button id="menuBtn">☰</button>
+      
+    <div id="sidebar" class="sidebar">
+    <button id="closeBtn">×</button>
+
+      <div class="profile">
+         <!-- Preserved Thymeleaf image source -->
+         <img th:src="@{${session.profile_location}}" alt="Profile picture" class="avatar">
+        <div class="userinfo">
+         <strong th:text="${session.username}">USER 01</strong>
+         <span class="handle" th:text="'@' + ${session.username}">@user01</span>
+       </div>
+      </div>
+    
+    <ul>
+      <li><a href="yourProfile.html">Your profile</a></li>
+      <li><a th:href="@{/auctionCreation}">Sell Items</a></li>
+      <li><a href="Auctioneer.html">Auctions</a></li>
+      <li><a href="#">Settings</a></li>
+      <li><a th:href="@{/sign-out}">Sign out</a></li>
+    </ul>
+  </div>
+
+  <div id="overlay" class="overlay"></div>
+</header>
+
+ <section class="hero">
+      <h1>Your Trusted Marketplace for Smart & Secure Bidding</h1>
+</section>
+
+<main class="container-user">
+<section id="auction">
+<div class="dropdown">
+         <button class="dropbtn" onclick="toggleDropdown()">Browse Categories ▼</button>
+            <div id="dropdownContent" class="dropdown-content">
+            <!-- Merged categories from both versions -->
+            <a href="#" onclick="filterCategory('all'); return false;">All</a>
+            <a href="#" onclick="filterCategory('new'); return false;">New Items</a>
+            <a href="#" onclick="filterCategory('bidpacks'); return false;">Bid Packs</a>
+            <a href="#" onclick="filterCategory('electronics'); return false;">Electronics & Computers</a>
+            <a href="#" onclick="filterCategory('fashion'); return false;">Fashion, Health & Beauty</a>
+            <a href="#" onclick="filterCategory('giftcards'); return false;">Gift Cards</a>
+            <a href="#" onclick="filterCategory('hobbies'); return false;">Hobbies, Toys, Outdoors & Games</a>
+            <a href="#" onclick="filterCategory('home'); return false;">Home, Garden & Tools</a>
+            <a href="#" onclick="filterCategory('kitchen'); return false;">Kitchen & Dining</a>
+            <a href="#" onclick="filterCategory('motors'); return false;">Motors (Cars, Boats, etc.)</a>
+     </div>
+</div>
+</section>
+
+<div class="search-container">
+  <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="Search for products..." />
+  <button onclick="searchProducts()">🔍</button>
+</div>
+
+<!-- Added section structure from new version -->
+<!--
+<section>
+  <h2 id="category-heading-1" class="h2">Starting In 2 Hours!</h2>
+  <div class="grid-container">
+   
+    <div class="auction-card" data-category="electronics">
+      
+      <img th:src="@{/images/macbook.jpg}" alt="Product 1">
+      <div class="auction-title">Apple MacBook Air 13"</div>
+      <div class="auction-time">Starts in 2h 20m</div>
+      <div class="auction-price">₱6,269</div>
+      <button class="bid-button">PLACE BID</button>
+      <div class="buy-now">Buy it now for ₱6,269</div>
+    </div>
+
+    <div class="auction-card" data-category="home-garden">
+      <img th:src="@{/images/jisulife.jpg}" alt="Product 7">
+      <div class="auction-title">JisuLife Handheld Fan Ultra2</div>
+      <div class="auction-time">Starts in 2h</div>
+      <div class="auction-price">₱71.99</div>
+      <button class="bid-button">PLACE BID</button>
+      <div class="buy-now">Buy it now for ₱71.99</div>
+    </div>
+
+    <div class="auction-card" data-category="home-garden">
+      <img th:src="@{/images/puri.jpg}" alt="Product 11">
+      <div class="auction-title">Dyson - Purifier Humidify + Cool Formaldehyde</div>
+      <div class="auction-time">Starts in 2h</div>
+      <div class="auction-price">₱999.99</div>
+      <button class="bid-button">PLACE BID</button>
+      <div class="buy-now">Buy it now for ₱999.99</div>
+    </div>
+  </div>
+</section>
+-->
+
+<section>
+  <h2 id="category-heading-2" class="h2">PLACE BID!</h2>
+  <div class="grid-container">
+    <div th:each="auctionVar : ${auctionEntityList}"
+         if="${auctionVar.auctionStatus == 'Ended'}"
+         th:attr="data-category=${auctionVar.auctionItem.itemCategory}"
+         class="auction-card">
+
+      <img th:src="@{${auctionVar.auctionItem.itemImage}}" alt="Product Image" />
+
+      <div class="auction-title" th:text="${auctionVar.auctionItem.itemTitle}">Auction Title</div>
+
+      <div class="auction-time"
+           th:text="'Ends in ' + ${#temporals.format(auctionVar.auctionItem.endTime, 'HH:mm:ss')}">
+        Ends in 00:00:00
+      </div>
+
+      <div class="auction-price" th:text="'₱' + ${auctionVar.currentPrice}">₱0.00</div>
+
+      <button class="bid-button"
+              th:onclick="|window.location.href='@{/auction/{id}(id=${auctionVar.auctionID})}'|">
+        PLACE BID
+      </button>
+
+      <div class="buy-now" th:text="'Buy it now for ₱' + ${auctionVar.auctionItem.startingBid}">
+        Buy it now for ₱0.00
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Added bid modal from new version -->
+  <div id="bid-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span id="close-bid-modal" class="close">&times;</span>
+      <h3>Place Your Bid</h3>
+      <input type="text" id="bid-username" placeholder="Username" required />
+      <textarea id="bid-comments" placeholder="Comments (optional)"></textarea>
+      <button id="submit-bid">Submit Bid</button>
+    </div>
+  </div>
+
+<div id="noResultsMessage">
+  No results found.
+</div>
+
+<div class="pagination-container">
+<div class="pagination">
+<button>Previous</button>
+    <button class="active">1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>Next</button>
+</div>
+</div>
+</main>
+   
+ <section id="contact">
+   <footer>
+       <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="mailto:auctionVista123@gmail.com">auctionVista123@gmail.com</a>
+        <p>Phone: 123-456-789</p>
+        </div>
+
+       <div class="footer-section">
+         <h4>Follow Us</h4>
+         <a href="#">Facebook</a>
+         <a href="#">Twitter</a>
+         <a href="#">Instagram</a>
+       </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="#">About Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+         </div>
+
+         <div class="footer-bottom">
+            © 2025 AuctionVista. All rights reserved.
+         </div>
+   </footer>
+ </section>
+    
+    <!-- Combined scripts from both versions -->
+    <script src="javascript/Bid-Button.js" defer></script>
+    <script src="javascript/Profile.js" defer></script>
+    <script src="javascript/browse.js" defer></script>
+    <script src="javascript/search.js" defer></script>
+    <script src="javascript/auction-details.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoolBulls: An Online Auction Platform for Students</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/items.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
+</head>
+ 
+<body>
+    <div th:if="${session.username != null}">
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            window.location.href = /*[[@{/user}]]*/ '/user';
+            /*]]>*/
+        </script>
+    </div>
+
+    <header> 
+    <nav class="navbar">
+    <section id="home">
+           <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#auction">Auctions</a></li> <!-- Restored anchor link -->
+            <li><a href="User.html">Contact</a></li>
+        </ul>
+    </section>
+    </nav>
+    <div class="logo">KoolBulls</div>
+        <div class="button-container">
+             <!-- Preserved Thymeleaf login/signup -->
+             <a th:href="@{/login}"><button class="login-btn">LOG IN</button></a>
+             <a th:href="@{/sign-up}"><button class="sign-up-btn">SIGN UP</button></a>
+      </div>
+</header>
+
+    <div class="hero">
+        <h1>Secure, Fast, And Transparent <br> Auctions For <br> Everyone</h1>
+    </div>
+
+<main class="container">
+  <section id="auction">
+     <div class="dropdown">
+         <button class="dropbtn" onclick="toggleDropdown()">Browse Categories ▼</button>
+            <div id="dropdownContent" class="dropdown-content">
+             <!-- Merged category filters -->
+             <a href="#" onclick="filterCategory('all'); return false;">All</a>
+             <a href="#" onclick="filterCategory('new'); return false;">New Items</a>
+             <a href="#" onclick="filterCategory('bidpacks'); return false;">Bid Packs</a>
+             <a href="#" onclick="filterCategory('electronics'); return false;">Electronics & Computers</a>
+             <a href="#" onclick="filterCategory('fashion'); return false;">Fashion, Health & Beauty</a>
+             <a href="#" onclick="filterCategory('giftcards'); return false;">Gift Cards</a>
+             <a href="#" onclick="filterCategory('hobbies'); return false;">Hobbies, Toys, Outdoors & Games</a>
+             <a href="#" onclick="filterCategory('home'); return false;">Home, Garden & Tools</a>
+             <a href="#" onclick="filterCategory('kitchen'); return false;">Kitchen & Dining</a>
+             <a href="#" onclick="filterCategory('motors'); return false;">Motors (Cars, Boats, etc.)</a>
+     </div>
+   </div>
+  </section>
+
+  <div class="search-container">
+  <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="Search for products..." />
+  <button onclick="searchProducts()">🔍</button>
+  </div>
+
+  <h2 id="category-heading-1" class="h2">Live Auctions</h2>
+  
+  <!-- Added login modal from new version -->
+  <div id="login-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span id="close-modal" onclick="closeModal()">&times;</span>
+      <h2>Please Sign-Up First</h2>
+      <button onclick="redirectToSignup()">Sign Up</button>
+      <p>Already have an account? <a href="Log-in.html" onclick="redirectToLogin()">Log in</a></p>
+    </div>
+  </div>
+
+  <div class="grid-container">
+  <div class="auction-card" th:each="item : ${auctionItems}" th:attr="data-category=${item.category}">
+    <img th:src="@{${item.imagePath}}" th:alt="${item.title}" />
+    <div class="auction-title" th:text="${item.title}"></div>
+    <div class="auction-time" th:text="${item.timeStatus}"></div>
+    <div class="auction-price" th:text="'₱' + ${item.price}"></div>
+    <div class="auction-time" th:if="${item.username != null}" th:text="${item.username}"></div>
+    <button class="bid-button" th:text="${item.bidButtonText}">PLACE BID</button>
+    <div class="buy-now" th:text="'Buy it now for ₱' + ${item.price}"></div>
+  </div>
+</div>
+
+<div id="noResultsMessage" th:if="${#lists.isEmpty(auctionItems)}">No results found.</div>
+
+
+ 
+</main>
+   
+ <section id="contact">
+   <footer>
+       <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="mailto:auctionVista123@gmail.com">auctionVista123@gmail.com</a>
+        <p>Phone: 123-456-789</p>
+        </div>
+
+       <div class="footer-section">
+         <h4>Follow Us</h4>
+         <a href="#">Facebook</a>
+         <a href="#">Twitter</a>
+         <a href="#">Instagram</a>
+       </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="#">About Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+         </div>
+
+         <div class="footer-bottom">
+            © 2025 AuctionVista. All rights reserved.
+         </div>
+   </footer>
+ </section>
+  
+    <!-- Combined scripts from both versions -->
+    <script src="Signup-Bidbtn.js" defer></script>
+    <script src="browse.js" defer></script>
+    <script src="search.js" defer></script>
+    <script src="auction-details.js" defer></script>
+</body>
+</html>

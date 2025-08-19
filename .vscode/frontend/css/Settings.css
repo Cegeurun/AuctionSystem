@@ -1,0 +1,268 @@
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+
+header {
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgb(195, 155, 213);
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.navbar {
+    position: absolute;           
+    top: 25px;                  
+    right: 100px;                  
+    display: flex;
+    align-items: center; 
+    gap: 20px; 
+    background-color: transparent; 
+    z-index: 100;    
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: row; 
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 15px; 
+}
+
+.navbar a {
+    color: white;  
+    font-family: "Poppins", sans-serif;        
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.navbar a:hover {
+    text-decoration: underline; 
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 10px;
+  border-bottom: 1px solid #2c2f33;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userinfo strong {
+  color: white;
+  font-size: 14px;
+}
+
+.handle {
+  color: #8b949e;
+  font-size: 12px;
+}
+
+#menuBtn {
+  background: transparent;
+  color: white;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: 0;
+}
+
+.sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background: rgb(195, 155, 213);
+  color: white;
+  padding: 20px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1001;
+  border-radius: 5px;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar button {
+  background: transparent;
+  color: white;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  float: right;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 50px;
+}
+
+.sidebar li {
+  margin: 15px 0;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: none;
+  display: none;
+  z-index: 1000;
+}
+
+.overlay.show {
+  display: none;
+}
+
+    body {
+      background: linear-gradient(145deg, #0d0026, #1e1033);
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
+      min-height: 100vh;
+      color: white;
+      padding-top: 100px;
+    }
+
+     .settings-wrapper {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #1e1033;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .settings-wrapper h2 {
+      text-align: center;
+      color: rgb(195, 155, 213);
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: white;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="file"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      background-color: #300040;
+      color: white;
+    }
+
+    input[type="file"] {
+      padding: 5px 0;
+    }
+
+    input:focus {
+      outline: 2px solid rgb(195, 155, 213);
+    }
+
+    .preview-img {
+      display: block;
+      margin: 15px auto;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+       .button-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .submit-btn,
+    .cancel-btn {
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn {
+      background-color: rgb(195, 155, 213);
+      color: white;
+    }
+
+    .submit-btn:hover {
+      background-color: #a47eb8;
+    }
+
+    .cancel-btn {
+      background-color: transparent;
+      color: white;
+      border: 2px solid rgb(195, 155, 213);
+    }
+
+    .cancel-btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 600px) {
+      .settings-wrapper {
+        margin: 20px;
+        padding: 20px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+    }
