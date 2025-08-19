@@ -3,6 +3,7 @@
 An online auction platform with a Java Spring Boot backend connected to a MySQL database, and a frontend built with HTML, CSS, and JavaScript.
 
 Special thanks to (github): Kyelkyel, mckooyy, and our friend Matthew for helping with the old project.
+
 ---
 
 ## 🚀 Features
@@ -125,6 +126,6 @@ Contributions to both frontend and backend are welcome! Please submit issues or 
 
 ## 📬 Contact
 
-For questions or support, open an issue or contact [Kyelkyel](https://github.com/Kyelkyel).
+For questions or support, open an issue or contact [Cegeurun](https://github.com/Cegeurun).
 
 
